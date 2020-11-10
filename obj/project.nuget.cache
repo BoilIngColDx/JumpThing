@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "gQRPbgNMfyXudpJL1svAam4Kh3fgyfvi0hhBCgnJlxk2FA27MJosHFjuB6sCvxCcYWnUAMoSlr5r/N/RSxy0pQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Liam\\source\\repos\\JumpThing\\JumpThing\\JumpThing.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Liam\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\Liam\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+  ],
+  "logs": []
+}
