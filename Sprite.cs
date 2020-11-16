@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace JumpThing
 {
@@ -60,7 +62,7 @@ namespace JumpThing
         // Update()
         // virtual method, to be overridden by child classes
         //
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(GameTime gameTime, List<PlatformSprite> platforms) { }
 
         //
         // Draw()
@@ -109,7 +111,7 @@ namespace JumpThing
         //
         public void setAnim(int newAnim)
         {
-            if (currentAnim != newAnim) // only if the new animation is not already playing
+            if (currentAnim != newAnim && newAnim < animations.Count) // only if the new animation is not already playing
             {
                 // change the animation int, and reset the counters
                 currentAnim = newAnim;
