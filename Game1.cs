@@ -5,6 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+// player movement
+// coin class
+// level switching
+// sound
+// UI
+// lives / checkpoints
+
 namespace JumpThing
 {
     public class Game1 : Game
@@ -15,10 +22,12 @@ namespace JumpThing
         Texture2D backgroundTxr, playerSheetTxr, platformSheetTxr, whiteBox;
 
         Point screenSize = new Point(800, 450);
-
+        int levelNumber = 0;
         PlayerSprite playerSprite;
+        CoinSprite coinSprite;
 
         List<List<PlatformSprite>> levels = new List<List<PlatformSprite>>();
+        List<Vector2> coins = new List<Vector2>();
 
         public Game1()
         {
@@ -47,6 +56,7 @@ namespace JumpThing
             whiteBox.SetData(new[] { Color.White });
 
             playerSprite = new PlayerSprite(playerSheetTxr, whiteBox, new Vector2(100, 50));
+            coinSprite = new CoinSprite(playerSheetTxr, whiteBox, new Vector2(200, 200));
 
             BuildLevels();
         }
@@ -56,9 +66,16 @@ namespace JumpThing
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            playerSprite.Update(gameTime, levels[0]);
+            playerSprite.Update(gameTime, levels[levelNumber]);
 
-            if (playerSprite.spritePos.Y > screenSize.Y + 50) playerSprite.ResetPlayer(new Vector2(50, 50));
+            if (playerSprite.spritePos.Y > screenSize.Y + 50) playerSprite.ResetPlayer(new Vector2(100, 50));
+            if (playerSprite.checkCollision(coinSprite))
+            {
+                levelNumber++;
+                if (levelNumber >= levels.Count) levelNumber = 0;
+                coinSprite.spritePos = coins[levelNumber];
+                playerSprite.ResetPlayer(new Vector2(100, 50));
+            }
 
             base.Update(gameTime);
         }
@@ -70,8 +87,9 @@ namespace JumpThing
             _spriteBatch.Draw(backgroundTxr, new Rectangle(0, 0, screenSize.X, screenSize.Y), Color.White);
 
             playerSprite.Draw(_spriteBatch, gameTime);
+            coinSprite.Draw(_spriteBatch, gameTime);
 
-            foreach(PlatformSprite platform in levels[0]) platform.Draw(_spriteBatch, gameTime);
+            foreach(PlatformSprite platform in levels[levelNumber]) platform.Draw(_spriteBatch, gameTime);
 
             _spriteBatch.End();
 
@@ -83,6 +101,12 @@ namespace JumpThing
             levels.Add(new List<PlatformSprite>());
             levels[0].Add(new PlatformSprite(platformSheetTxr, whiteBox, new Vector2(100, 300)));
             levels[0].Add(new PlatformSprite(platformSheetTxr, whiteBox, new Vector2(250, 300)));
+            coins.Add(new Vector2(200, 200));
+
+            levels.Add(new List<PlatformSprite>());
+            levels[1].Add(new PlatformSprite(platformSheetTxr, whiteBox, new Vector2(100, 400)));
+            levels[1].Add(new PlatformSprite(platformSheetTxr, whiteBox, new Vector2(250, 350)));
+            coins.Add(new Vector2(400, 200));
         }
     }
 }
